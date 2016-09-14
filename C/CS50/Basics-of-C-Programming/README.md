@@ -14,7 +14,7 @@
 
 **Reference:** [http://computer.howstuffworks.com/c2.htm](http://computer.howstuffworks.com/c2.htm)
 
-
+- - -
 
 ### Variables and Printf
 **File Name:** add.c
@@ -29,3 +29,24 @@
 ![add.c](http://s.hswstatic.com/gif/c-exec.gif)
 
 **Reference:** [http://computer.howstuffworks.com/c5.htm](http://computer.howstuffworks.com/c5.htm)
+
+- - -
+
+### Conditionals
+**File Name:** if.c
+**Description:** If, elseif (simulated), and else
+
+**Notes:**
+- You accomplish an **elseif** using nested **if** in C.
+
+![if.c](http://s.hswstatic.com/gif/c-if.gif)
+
+**Reference:** [http://computer.howstuffworks.com/c8.htm](http://computer.howstuffworks.com/c8.htm)
+
+- - -
+
+### Looping: A Real Example
+**File Name:** loopy.c
+**Description:** Prints table of Farenheit to Celsius conversions. Increments Farenheit by 10.
+
+**Reference:** [http://computer.howstuffworks.com/c9.htm](http://computer.howstuffworks.com/c9.htm)

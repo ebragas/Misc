@@ -13,3 +13,19 @@
 ![diagram](http://s.hswstatic.com/gif/c-compile.gif)
 
 **Reference:** [http://computer.howstuffworks.com/c2.htm](http://computer.howstuffworks.com/c2.htm)
+
+
+
+### Variables and Printf
+**File Name:** add.c
+**Description:** Declares variables, performs arithmatic, and passing them as arguments to ``printf`` using placeholders.
+
+**Notes:**
+- `int a, b, c;` declares three integer variables named **a**, **b**, and **c**.
+- The `%d` placeholders are replaced with values based on their ordinal positions and the positions of the subsequently passed arguments to printf.
+- `scanf` accepts input in the same types of formatted strings as `printf` does.
+- The **&** (address operator) returns the address of a variable. Scanf accepts variables with the address operator to assign input to the variable.
+
+![add.c](http://s.hswstatic.com/gif/c-exec.gif)
+
+**Reference:** [http://computer.howstuffworks.com/c5.htm](http://computer.howstuffworks.com/c5.htm)

@@ -9,7 +9,8 @@ SET NOCOUNT ON;
 --
 -- Author:		Eric Bragas - DesignMind
 -- Created:		9/1/2016
--- Description: Removes alpha characters from strings which should only contain numbers
+-- Description: Removes alpha characters from strings which should only contain numbers or period
+--				characters (assumes only one period possible).
 -- ====================================================================================================
 
 -- ====================================================================================================

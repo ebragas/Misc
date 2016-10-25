@@ -4,11 +4,12 @@
     the number of characters as indicated by the key
 
   Todo:
+  - Handle alphabet looping
   - Accepts negative key values?
 */
 
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 
@@ -18,11 +19,14 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  // Add key value to each character
-  for (int i = 0; i < strlen(argv[1]); i++) {
-    printf("%c", argv[1][i]);
-  }
+  char* val = argv[1];
+  int key = atoi(argv[2]);
 
+  // Pring encoded string
+  for (int i = 0; i < strlen(val); i++) {
+    printf("%c", argv[1][i] + key);
+  }
   printf("\n");
+
   return 0;
 }

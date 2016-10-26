@@ -1,4 +1,6 @@
 
+// Caeser Cipher: Accept cipher key and text, return encrypted text
+
 // ci = (pi + k) % 26
 
 #include <stdio.h>

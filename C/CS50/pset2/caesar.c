@@ -22,6 +22,7 @@ int main(int argc, char* argv[]) {
     // Check key is non-negative
     if (k < 0) {
       printf("Key must be non-negative\n");
+      return 1;
     }
 
     // Get string; Check not null
@@ -45,10 +46,14 @@ int main(int argc, char* argv[]) {
               cipher(p[i], 0);   // Non-alpha
           }
       }
-    }
 
-    printf("\n");   // End line
-    return 0;
+      printf("\n");   // End line
+      return 0;
+
+    } else {
+      printf("Try again. Enter text to cipher.\n");
+      return 1;
+    }
 }
 
 // Function: Print character offset by key

@@ -7,7 +7,7 @@
 # TODO: Error handling
 
 import csv
-import time
+from datetime import datetime
 import requests as r
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
@@ -108,6 +108,6 @@ def profile_get(soup, pName, tType='div', pType='class'):
 
 
 if __name__ == "__main__":
-    start_time = time.time()
+    start_time = datetime.now()
     main()
-    print("--- %s seconds ---" % (time.time() - start_time))
+    print("Total run time:", datetime.now() - start_time)

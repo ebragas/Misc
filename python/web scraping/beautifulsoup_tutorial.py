@@ -13,7 +13,7 @@ with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames, quoting=csv.QUOTE_ALL)
     writer.writeheader()
 
-    for i in range(1, 3):
+    for i in range(1, 2):
         # request page; make soup; close page
         print("Scraping...", url + "&page=" + str(i))
         page = r.get(url, params={'limit': 50, 'page': i})
@@ -34,8 +34,9 @@ with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
 
             # skateparkname
             park_name_tag = profile_soup.find('div', {'class': 'jrFieldRow jrSkateparkname'})
-            if park_name_tag is not None:
-                park_name = park_name_tag.contents[-1].string
+            # if park_name_tag is not None:
+                # park_name = park_name_tag.contents[-1].string
+            park_name = park_name_tag.contents[-1].string if park_name_tag is not None else None
 
             # extract general
             # bmx

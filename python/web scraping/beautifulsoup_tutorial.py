@@ -10,10 +10,17 @@ from tqdm import tqdm
 url = 'https://www.concretedisciples.com'
 
 def main():
+    """
+    Scrapes the concretedisciples.com site for every park and it's metadata.
+
+    Eric Bragas 2017.6.22
+    """
     # open file for writing
     with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
         fieldnames = ['park_name', 'park_url', 'bmx', 'rip', 'lights', 'restrooms', 'freepay',
-                    'indoors', 'pads']
+                      'indoors', 'pads', 'surface', 'proshop', 'address', 'zipcode', 'city',
+                      'management']
+
         writer = csv.DictWriter(csvfile, fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
 
@@ -24,9 +31,6 @@ def main():
             soup = bs(page.content, 'html.parser')
             page.close()
 
-            # create list of urls
-            park_dict = {}
-
             # traverse and extract each profile
             for e in tqdm(soup.find_all('div', {'class': 'jrContentTitle'})):
                 park_url = e.a['href']
@@ -34,72 +38,55 @@ def main():
                 profile_soup = bs(profile_page.content, 'html.parser')
                 profile_page.close()
 
-                # skateparkname
-                park_name_tag = profile_soup.find('div', {'class': 'jrFieldRow jrSkateparkname'})
-                park_name = park_name_tag.contents[-1].string if park_name_tag is not None else None
-
-                # bmx
-                bmx_tag = profile_soup.find('div', {'class': 'jrFieldRow jrBmx'})
-                bmx = bmx_tag.contents[-1].string if bmx_tag is not None else None
-
-                # rip
-                rip_tag = profile_soup.find('div', {'class': 'jrFieldRow jrRip'})
-                rip = rip_tag.contents[-1].string if rip_tag is not None else None
-
-                # lights
-                lights_tag = profile_soup.find('div', {'class': 'jrFieldRow jrLightsx'})
-                lights = lights_tag.contents[-1].string if lights_tag is not None else None
-
-                # restrooms
-                restrooms_tag = profile_soup.find('div', {'class': 'jrFieldRow jrRestroomsx'})
-                restrooms = restrooms_tag.contents[-1].string if restrooms_tag is not None else None
-
-                # freepay
-                freepay_tag = profile_soup.find('div', {'class': 'jrFieldRow jrFreepayx'})
-                freepay = freepay_tag.contents[-1].string if freepay_tag is not None else None
-
-                # indoors
-                indoors_tag = profile_soup.find('div', {'class': 'jrFieldRow jrIndoorsx'})
-                indoors = indoors_tag.contents[-1].string if indoors_tag is not None else None
-
-                # padsrequired
-                pads = profile_get(soup=profile_soup, tType='div', pType='class',
-                                   pName='jrFieldRow jrPadsx')
-
-                # surface
-                # proshop
-
-                # extract construction
-
-                # extract location
-                # address
-                # postal code
-                # city
-
-                # extract contacts
-                # management
+                # parse page for variables
+                park_name = profile_get(profile_soup, 'jrFieldRow jrSkateparkname')
+                bmx = profile_get(profile_soup, 'jrFieldRow jrBmx')
+                rip = profile_get(profile_soup, 'jrFieldRow jrRip')
+                lights = profile_get(profile_soup, 'jrFieldRow jrLightsx')
+                restrooms = profile_get(profile_soup, 'jrFieldRow jrRestroomsx')
+                freepay = profile_get(profile_soup, 'jrFieldRow jrFreepayx')
+                indoors = profile_get(profile_soup, 'jrFieldRow jrIndoorsx')
+                pads = profile_get(profile_soup, 'jrFieldRow jrPadsx')
+                surface = profile_get(profile_soup, 'jrFieldRow jrSurfacex')
+                proshop = profile_get(profile_soup, 'jrFieldRow jrProshopx')
+                address = profile_get(profile_soup, 'jrFieldRow jrAddress')
+                zipcode = profile_get(profile_soup, 'jrFieldRow jrZip')
+                city = profile_get(profile_soup, 'jrFieldRow jrCity')
+                management = profile_get(profile_soup, 'jrFieldRow jrManagement')
 
                 # write data
-                writer.writerow({'park_name': park_name, 'park_url': park_url, 'bmx': bmx,
-                                 'rip': rip, 'lights': lights, 'restrooms': restrooms,
-                                 'freepay': freepay, 'indoors': indoors, 'pads': pads})
+                writer.writerow({'park_name': park_name,
+                                 'park_url': park_url,
+                                 'bmx': bmx,
+                                 'rip': rip,
+                                 'lights': lights,
+                                 'restrooms': restrooms,
+                                 'freepay': freepay,
+                                 'indoors': indoors,
+                                 'pads': pads,
+                                 'surface': surface,
+                                 'proshop': proshop,
+                                 'address': address,
+                                 'zipcode': zipcode,
+                                 'city': city,
+                                 'management': management})
 
             print()
 
 
 
-def profile_get(soup, tType, pType, pName):
+def profile_get(soup, pName, tType='div', pType='class'):
     """
     soup: BeautifulSoup object
-    tType: string, type of tag eg. div, a, etc.
-    pType: string, property type eg. class, id, etc.
+    tType: string, type of tag eg. div, a, etc.; default 'div'
+    pType: string, property type eg. class, id, etc.; default 'class'
     pName: string property name
 
     Returns string from last element in contents of tag if tag exists, else None
     """
     tag = soup.find(tType, {pType, pName})
     value = tag.contents[-1].string if tag is not None else None
-    
+
     return value
 
 

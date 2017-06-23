@@ -4,6 +4,7 @@
 import csv
 import requests as r
 from bs4 import BeautifulSoup as bs
+from tqdm import tqdm
 
 url = 'https://www.concretedisciples.com'
 
@@ -14,14 +15,15 @@ with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
 
     for i in range(1, 3):
         # request page; make soup; close page
-        print(url + "&page=" + str(i))
+        print("Scraping...", url + "&page=" + str(i))
         page = r.get(url, params={'limit': 50, 'page': i})
         soup = bs(page.content, 'html.parser')
         page.close()
 
         # create list or urls
         park_dict = {}
-        for e in soup.find_all('div', {'class': 'jrContentTitle'}):
+
+        for e in tqdm(soup.find_all('div', {'class': 'jrContentTitle'})):
             # park_name = e.a.string
             park_url = e.a['href']
 
@@ -35,21 +37,32 @@ with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
             if park_name_tag is not None:
                 park_name = park_name_tag.contents[-1].string
 
-                # rip
-                # freepay
-                # indoors
-                # surface
-                # proshop
+            # extract general
+            # bmx
+            # openclosed
+            # lights
+            # restrooms
+            # rip
+            # freepay
+            # indoors
+            # padsrequired
+            # surface
+            # proshop
 
             # extract construction
-            
+
             # extract location
+            # address
+            # postal code
+            # city
 
             # extract contacts
+            # management
 
             # write data
             writer.writerow({'park_name': park_name, 'park_url': park_url})
 
+        print()
 
 # with open(r'c:\data\park_urls.csv', 'w') as csvfile:
 #     fieldnames = ['park_url']

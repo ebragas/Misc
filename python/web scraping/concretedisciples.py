@@ -1,7 +1,10 @@
+#!/usr/bin/env python
 
 # pylint: disable=C0103
 
 # TODO: Use command line arguments for starting URL and number of pages
+# TODO: Performance tune
+# TODO: Error handling
 
 import csv
 import requests as r
@@ -9,7 +12,12 @@ from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
 
 
-url = 'https://www.concretedisciples.com'
+# url = 'https://www.concretedisciples.com'
+base_url = 'https://www.concretedisciples.com'
+url = 'https://www.concretedisciples.com/skatepark-directory/usa-skateparks'
+headers = headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) ' +
+                   'AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 ' +
+                   'Safari/600.1.4'}
 
 def main():
     """
@@ -21,22 +29,22 @@ def main():
     with open(r'c:\data\park_urls.csv', 'w', newline='') as csvfile:
         fieldnames = ['park_name', 'park_url', 'bmx', 'rip', 'lights', 'restrooms', 'freepay',
                       'indoors', 'pads', 'surface', 'proshop', 'address', 'zipcode', 'city',
-                      'management']
+                      'management', 'description']
 
         writer = csv.DictWriter(csvfile, fieldnames, quoting=csv.QUOTE_ALL)
         writer.writeheader()
 
         # start loading list pages
         for i in range(1, 2):
-            print("Scraping...", url + "?page=" + str(i))
-            page = r.get(url, params={'limit': 50, 'page': i})
+            print("Scraping...", url + "?page=" + str(i) + "&limit=50")
+            page = r.get(url, params={'limit': 50, 'page': i}, headers=headers)
             soup = bs(page.content, 'html.parser')
             page.close()
 
             # traverse and extract each profile
             for e in tqdm(soup.find_all('div', {'class': 'jrContentTitle'})):
                 park_url = e.a['href']
-                profile_page = r.get(url + park_url)
+                profile_page = r.get(base_url + park_url)
                 profile_soup = bs(profile_page.content, 'html.parser')
                 profile_page.close()
 
@@ -56,6 +64,10 @@ def main():
                 city = profile_get(profile_soup, 'jrFieldRow jrCity')
                 management = profile_get(profile_soup, 'jrFieldRow jrManagement')
 
+                desc_tag = profile_soup.find('div', {'class': 'jrListingFulltext '}).find('p')
+                description = desc_tag.text if desc_tag is not None else None
+                # soup.find('div', {'class': 'jrListingFulltext'}).find('p').text
+
                 # write data
                 writer.writerow({'park_name': park_name,
                                  'park_url': park_url,
@@ -71,7 +83,8 @@ def main():
                                  'address': address,
                                  'zipcode': zipcode,
                                  'city': city,
-                                 'management': management})
+                                 'management': management,
+                                 'description': description})
 
             print()
 

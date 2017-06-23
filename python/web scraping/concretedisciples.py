@@ -7,6 +7,7 @@
 # TODO: Error handling
 
 import csv
+import time
 import requests as r
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
@@ -107,4 +108,6 @@ def profile_get(soup, pName, tType='div', pType='class'):
 
 
 if __name__ == "__main__":
+    start_time = time.time()
     main()
+    print("--- %s seconds ---" % (time.time() - start_time))

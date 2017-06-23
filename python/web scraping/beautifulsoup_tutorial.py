@@ -1,6 +1,8 @@
 
 # pylint: disable=C0103
 
+# TODO: Use command line arguments for starting URL and number of pages
+
 import csv
 import requests as r
 from bs4 import BeautifulSoup as bs

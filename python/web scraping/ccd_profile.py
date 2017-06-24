@@ -2,7 +2,7 @@
 
 # break down the profile page parsing into a single function
 
-
+import csv
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
@@ -52,12 +52,14 @@ def profile_get(url):
 
 
 # Retrieves a list of URLs from a listings page
-def urllist_get(url, size):
+def urllist_get(url, page, limit):
     """
     ...
     """
-    print("Retrieving URLs...")
-    r = requests.get(url + "/?limit=" + str(size))
+    params = {'page': page, 'limit': limit}
+    print("Retrieving URLs...", url + "/?page=" + str(page) + "&limit=" + str(limit))
+    r = requests.get(url, params=params)
+
     if r.status_code == 200:
         soup = BeautifulSoup(r.text, 'lxml')
         r.close()
@@ -73,16 +75,22 @@ def urllist_get(url, size):
         r.close()
 
 
-url = 'https://www.concretedisciples.com'
+domain = 'https://www.concretedisciples.com'
 
-urls = urllist_get(url, 50)
+fieldnames = ['Skatepark Name', 'Lights', 'Riding Surface?', 'Address', 'Postal Code', 'City',
+              'Directions', 'Size (square footage, no comma)', 'Open / Closed', 'Free or Pay',
+              'Inside or Outside', 'Managment', 'BMX', 'Are Pads Required?',
+              'Is there a pro shop on site?', 'Phone Number', 'Website', 'Email', 'Restrooms',
+              'Designer', 'Builder', 'Opening Date', 'Extra Info']
 
-# Get list of available fields
-# fields_list = []
-# for i in urls:
-#     for j in profile_get(url + i).keys():
-#         if j not in fields_list:
-#             fields_list.append(j)
+filename = 'C:/data/skateparks1.csv'
 
-# for k in fields_list:
-#     print(k)
+with open(filename, 'w') as csvfile:
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+
+    for i in range(1, 3):
+        urls = urllist_get(domain, i, 50)
+
+        for profile in urls:
+            writer.writerow(profile_get(domain + profile))

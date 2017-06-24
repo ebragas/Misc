@@ -52,12 +52,12 @@ def profile_get(url):
 
 
 # Retrieves a list of URLs from a listings page
-def urllist_get(url):
+def urllist_get(url, size):
     """
     ...
     """
     print("Retrieving URLs...")
-    r = requests.get(url)
+    r = requests.get(url + "/?limit=" + str(size))
     if r.status_code == 200:
         soup = BeautifulSoup(r.text, 'lxml')
         r.close()
@@ -73,14 +73,16 @@ def urllist_get(url):
         r.close()
 
 
-start_time = datetime.now()
-
 url = 'https://www.concretedisciples.com'
 
-urls = urllist_get(url + '/?limit=50')
+urls = urllist_get(url, 50)
 
-print("Total elapsed time: {}".format(datetime.now() - start_time))
+# Get list of available fields
+# fields_list = []
+# for i in urls:
+#     for j in profile_get(url + i).keys():
+#         if j not in fields_list:
+#             fields_list.append(j)
 
-
-for i in urls:
-    print(profile_get(url + i))
+# for k in fields_list:
+#     print(k)

@@ -12,13 +12,13 @@ import requests as r
 from bs4 import BeautifulSoup as bs
 from tqdm import tqdm
 
-
-# url = 'https://www.concretedisciples.com'
-base_url = 'https://www.concretedisciples.com'
+# constants
+domain = 'https://www.concretedisciples.com'
 url = 'https://www.concretedisciples.com/skatepark-directory/usa-skateparks'
-headers = headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) ' +
-                   'AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 ' +
-                   'Safari/600.1.4'}
+
+headers = {'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) ' +
+                         'AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12A366 ' +
+                         'Safari/600.1.4'}
 
 def main():
     """
@@ -45,7 +45,7 @@ def main():
             # traverse and extract each profile
             for e in tqdm(soup.find_all('div', {'class': 'jrContentTitle'})):
                 park_url = e.a['href']
-                profile_page = r.get(base_url + park_url)
+                profile_page = r.get(domain + park_url)
                 profile_soup = bs(profile_page.content, 'html.parser')
                 profile_page.close()
 
@@ -67,7 +67,6 @@ def main():
 
                 desc_tag = profile_soup.find('div', {'class': 'jrListingFulltext '}).find('p')
                 description = desc_tag.text if desc_tag is not None else None
-                # soup.find('div', {'class': 'jrListingFulltext'}).find('p').text
 
                 # write data
                 writer.writerow({'park_name': park_name,

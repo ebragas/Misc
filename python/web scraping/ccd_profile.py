@@ -6,6 +6,7 @@ import csv
 from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
 # constants
 headers = {'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_0_2 like Mac OS X) ' +
@@ -20,11 +21,11 @@ def profile_get(url):
     Returns a dictionary of the fields and values available on the profile.
     """
 
-    print("Requesting...", url)
+    # print("Requesting...", url)
     r = requests.get(url)
 
     if r.status_code == 200:
-        print("Processing...")
+        # print("Processing...")
         soup = BeautifulSoup(r.text, 'lxml')
         r.close()
 
@@ -52,7 +53,7 @@ def profile_get(url):
 
 
 # Retrieves a list of URLs from a listings page
-def urllist_get(url, page, limit):
+def urllist_get(urlj, page, limit):
     """
     ...
     """
@@ -66,7 +67,7 @@ def urllist_get(url, page, limit):
 
         urllist = []
         for tag in soup.select(".jrContentTitle"):
-            urllist.append(tag.a['href'])
+            urllist.append(url + tag.a['href'])
 
         return urllist
 
@@ -85,12 +86,17 @@ fieldnames = ['Skatepark Name', 'Lights', 'Riding Surface?', 'Address', 'Postal 
 
 filename = 'C:/data/skateparks1.csv'
 
-with open(filename, 'w') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
+# with open(filename, 'w') as csvfile:
+#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#     writer.writeheader()
 
-    for i in range(1, 3):
-        urls = urllist_get(domain, i, 50)
+data = []
 
-        for profile in urls:
-            writer.writerow(profile_get(domain + profile))
+for i in range(1, 2):
+    url_list = urllist_get(domain, i, 50)
+
+    for url in tqdm(url_list):
+        data.append(profile_get(url))
+
+for row in data:
+    print(row)

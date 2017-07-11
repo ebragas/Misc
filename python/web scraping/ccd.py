@@ -77,6 +77,9 @@ def urllist_get(url, page, limit):
         r.close()
 
 def main():
+    """
+    Driver function
+    """
     domain = 'https://www.concretedisciples.com'
 
     fieldnames = ['Skatepark Name', 'Lights', 'Riding Surface?', 'Address', 'Postal Code', 'City',
@@ -94,21 +97,22 @@ def main():
     data = []
 
     for i in range(1, 2):
-        url_list = urllist_get(domain, i, 50)
+        url_list = urllist_get(domain, i, 3)
 
-        for url in url_list:
+        for url in tqdm(url_list):
             data.append(profile_get(url))
 
     # Print results
     # for row in data:
     #     print(row)
 
-    with open(filename, mode='a') as csvfile:
+    with open(filename, mode='w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
         # Write rows
-        
+        for row in data:
+            writer.writerow(row)
 
 if __name__ == "__main__":
     main()

@@ -53,9 +53,10 @@ def profile_get(url):
 
 
 # Retrieves a list of URLs from a listings page
-def urllist_get(urlj, page, limit):
+def urllist_get(url, page, limit):
     """
-    ...
+    Arguments: starting url, starting page, number of records per page
+    Returns a list of URLs from a listings page
     """
     params = {'page': page, 'limit': limit}
     print("Retrieving URLs...", url + "/?page=" + str(page) + "&limit=" + str(limit))
@@ -75,28 +76,39 @@ def urllist_get(urlj, page, limit):
         print(r.status_code)
         r.close()
 
+def main():
+    domain = 'https://www.concretedisciples.com'
 
-domain = 'https://www.concretedisciples.com'
+    fieldnames = ['Skatepark Name', 'Lights', 'Riding Surface?', 'Address', 'Postal Code', 'City',
+                'Directions', 'Size (square footage, no comma)', 'Open / Closed', 'Free or Pay',
+                'Inside or Outside', 'Managment', 'BMX', 'Are Pads Required?',
+                'Is there a pro shop on site?', 'Phone Number', 'Website', 'Email', 'Restrooms',
+                'Designer', 'Builder', 'Opening Date', 'Extra Info']
 
-fieldnames = ['Skatepark Name', 'Lights', 'Riding Surface?', 'Address', 'Postal Code', 'City',
-              'Directions', 'Size (square footage, no comma)', 'Open / Closed', 'Free or Pay',
-              'Inside or Outside', 'Managment', 'BMX', 'Are Pads Required?',
-              'Is there a pro shop on site?', 'Phone Number', 'Website', 'Email', 'Restrooms',
-              'Designer', 'Builder', 'Opening Date', 'Extra Info']
+    filename = 'C:/data/skateparks1.csv'
 
-filename = 'C:/data/skateparks1.csv'
+    # with open(filename, 'w') as csvfile:
+    #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    #     writer.writeheader()
 
-# with open(filename, 'w') as csvfile:
-#     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-#     writer.writeheader()
+    data = []
 
-data = []
+    for i in range(1, 2):
+        url_list = urllist_get(domain, i, 50)
 
-for i in range(1, 2):
-    url_list = urllist_get(domain, i, 50)
+        for url in url_list:
+            data.append(profile_get(url))
 
-    for url in tqdm(url_list):
-        data.append(profile_get(url))
+    # Print results
+    # for row in data:
+    #     print(row)
 
-for row in data:
-    print(row)
+    with open(filename, mode='a') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+        # Write rows
+        
+
+if __name__ == "__main__":
+    main()

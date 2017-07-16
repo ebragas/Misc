@@ -48,18 +48,35 @@ def getProfile(url):
         data['locality'] = soup.find('span', {'class': 'locality'}).text
         print(data['locality']) # testing
 
-        
+        # Map URL
+        div_map = soup.find('div', {'id': 'location-map'})
+        data['map_url'] = div_map.a.img['src']
+        print(data['map_url'])  # testing
+
+        # Directions URL
+        if soup.find('a', {'class': 'directions-link'}):
+            data['dir_url'] = soup.find('a', {'class': 'directions-link'})['href']
+            print(data['dir_url'])  # testing
+
+        # Num_Chargers
+        data['num_chargers'] = soup.select('p:nth-of-type(2)')[0].contents[-1]
+        print(data['num_chargers'])  # testing
+
 
     # Exit gracefully
     else:
         print("Request:", url, "failed with code:", r.status_code)
 
-    return {}
+    return data
 
+def main():
+    """Module driver"""
+    profile_urls = [r'https://www.tesla.com/findus/location/supercharger/athensalsupercharger',
+                    r'https://www.tesla.com/findus/location/supercharger/paysonsupercharger',
+                    r'https://www.tesla.com/findus/location/supercharger/elcentrosupercharger']
 
-profile_urls = [r'https://www.tesla.com/findus/location/supercharger/athensalsupercharger',
-                r'https://www.tesla.com/findus/location/supercharger/paysonsupercharger',
-                r'https://www.tesla.com/findus/location/supercharger/elcentrosupercharger']
+    for url in profile_urls:
+        getProfile(url)
 
-for url in profile_urls:
-    getProfile(url)
+if __name__ == "__main__":
+    main()

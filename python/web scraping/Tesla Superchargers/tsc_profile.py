@@ -25,42 +25,42 @@ def getProfile(url):
         else:
             data['coming_soon'] = 'Open'
 
-        print(data['coming_soon'])
+        # print(data['coming_soon'])
 
         # Name
         h1 = soup.find_all('h1')
         data['name'] = h1[-1].text
-        print(data['name'])  # testing
+        # print(data['name'])  # testing
 
         # Address name
         data['address_name'] = soup.find('span', {'class': 'common-name'}).text
-        print(data['address_name']) # testing
+        # print(data['address_name']) # testing
 
         # Street address
         data['street_address'] = soup.find('span', {'class': 'street-address'}).text
-        print(data['street_address']) # testing
+        # print(data['street_address']) # testing
 
         # Extended address
         data['extended_address'] = soup.find('span', {'class': 'extended-address'}).text
-        print(data['extended_address']) # testing
+        # print(data['extended_address']) # testing
 
         # Locality
         data['locality'] = soup.find('span', {'class': 'locality'}).text
-        print(data['locality']) # testing
+        # print(data['locality']) # testing
 
         # Map URL
-        div_map = soup.find('div', {'id': 'location-map'})
-        data['map_url'] = div_map.a.img['src']
-        print(data['map_url'])  # testing
+        data['map_url'] = soup.find('div', {'id': 'location-map'}).a.img['src']
+        # data['map_url'] = div_map.a.img['src']
+        # print(data['map_url'])  # testing
 
         # Directions URL
         if soup.find('a', {'class': 'directions-link'}):
             data['dir_url'] = soup.find('a', {'class': 'directions-link'})['href']
-            print(data['dir_url'])  # testing
+            # print(data['dir_url'])  # testing
 
         # Num_Chargers
         data['num_chargers'] = soup.select('p:nth-of-type(2)')[0].contents[-1]
-        print(data['num_chargers'])  # testing
+        # print(data['num_chargers'])  # testing
 
 
     # Exit gracefully
@@ -77,6 +77,8 @@ def main():
 
     for url in profile_urls:
         getProfile(url)
+
+    print("Done!")
 
 if __name__ == "__main__":
     main()

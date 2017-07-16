@@ -20,12 +20,11 @@ def getProfile(url):
         soup = BeautifulSoup(r.text, 'lxml')
 
         # Coming soon
-        coming_soon = soup.find('span', {'class': 'coming-soon'})
-        if coming_soon:
-            data['coming_soon'] = coming_soon.text
+        if soup.find('span', {'class': 'coming-soon'}):
+            data['coming_soon'] = soup.find('span', {'class': 'coming-soon'}).text
         else:
             data['coming_soon'] = 'Open'
-        
+
         print(data['coming_soon'])
 
         # Name
@@ -35,7 +34,21 @@ def getProfile(url):
 
         # Address name
         data['address_name'] = soup.find('span', {'class': 'common-name'}).text
-        print(data['address_name'])
+        print(data['address_name']) # testing
+
+        # Street address
+        data['street_address'] = soup.find('span', {'class': 'street-address'}).text
+        print(data['street_address']) # testing
+
+        # Extended address
+        data['extended_address'] = soup.find('span', {'class': 'extended-address'}).text
+        print(data['extended_address']) # testing
+
+        # Locality
+        data['locality'] = soup.find('span', {'class': 'locality'}).text
+        print(data['locality']) # testing
+
+        
 
     # Exit gracefully
     else:

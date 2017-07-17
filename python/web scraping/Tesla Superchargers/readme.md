@@ -1,6 +1,6 @@
 # Tesla Supercharger Web Scraping
 
-Web scrapes the Tesla Supercharger listings and profiles pages for data, such as: address, name, GoogleMaps static image, and writes data to CSV.
+Web scrapes the Tesla Supercharger listings and profiles pages for data, such as: address, name, GoogleMaps static image URL, and writes data to CSV.
 
 ## Getting Started
 

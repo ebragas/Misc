@@ -9,6 +9,7 @@ def getProfile(url):
     Input: url, url of Tesla Supercharger profile page
     Returns dictionary of available data points
     """
+    url = r'https://www.tesla.com' + url
     print(url)  # testing
     data = {}
 
@@ -18,6 +19,7 @@ def getProfile(url):
 
         # Parse response
         soup = BeautifulSoup(r.text, 'lxml')
+        r.close()
 
         # Coming soon
         if soup.find('span', {'class': 'coming-soon'}):
@@ -66,6 +68,7 @@ def getProfile(url):
     # Exit gracefully
     else:
         print("Request:", url, "failed with code:", r.status_code)
+        r.close()
 
     return data
 

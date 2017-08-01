@@ -13,10 +13,6 @@ SET NOCOUNT ON;
 --				characters (assumes only one period possible).
 -- ====================================================================================================
 
--- ====================================================================================================
--- Cleanup
--- ====================================================================================================
-
 IF OBJECT_ID('dbo.fnRemoveNonNumericChars', 'FN') IS NOT NULL
 	BEGIN
 		DROP FUNCTION dbo.fnRemoveNonNumericChars;
@@ -24,9 +20,7 @@ IF OBJECT_ID('dbo.fnRemoveNonNumericChars', 'FN') IS NOT NULL
 	END;
 GO
 
--- ====================================================================================================
 -- Create Function
--- ====================================================================================================
 
 CREATE FUNCTION fnRemoveNonNumericChars ( @strText VARCHAR(1000) )
 RETURNS VARCHAR(1000)

@@ -1,7 +1,7 @@
 import scrapy
 
 class skaters(scrapy.Spider):
-    name = "skaters"
+    name = "boardr"
     start_urls = [
         "https://theboardr.com/skateboarders_list"
     ]

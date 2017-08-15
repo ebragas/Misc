@@ -21,6 +21,7 @@ class CcdSpider(scrapy.Spider):
 
         yield {
             # General
+            "full-name": response.css('.contentheading span::text').extract_first(),
             "name": response.css('.jrSkateparkname .jrFieldValue::text').extract_first(),
             "has-bmx": response.css('.jrBmx .jrFieldValue::text').extract_first(),
             "open-closed": response.css('.jrRip .jrFieldValue::text').extract_first(),
@@ -39,6 +40,7 @@ class CcdSpider(scrapy.Spider):
             "address": response.css('.jrAddress .jrFieldValue::text').extract_first(),
             "zipcode": response.css('.jrZip .jrFieldValue::text').extract_first(),
             "city": response.css('.jrCity .jrFieldValue::text').extract_first(),
+            "country": response.css('a span::text').extract_first(),
             "desc": desc,
             "editor-rating": response.css('.jrOverallEditor .jrRatingValue::text').extract_first(),
             "user-rating": response.css('.jrOverallUser .jrRatingValue::text').extract_first(),

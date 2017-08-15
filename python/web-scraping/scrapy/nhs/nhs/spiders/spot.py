@@ -5,7 +5,7 @@ import scrapy
 class SpotSpider(scrapy.Spider):
     name = 'spot'
     # allowed_domains = ['http://skateparkoftampa.com']
-    start_urls = ['http://http://skateparkoftampa.com/']
+    start_urls = ['http://skateparkoftampa.com/spot/sd.aspx']
 
     def parse(self, response):
         for url in response.css('.BlogPost div .SizeSelectionGridItemSmall a::attr(href)').extract():

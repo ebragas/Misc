@@ -3,10 +3,11 @@ import csv
 import googlemaps
 from datetime import datetime
 
-SOURCE_FILE = r'C:\data\skate-parks\ccd.csv'
+SOURCE_FILE = r'C:\data\skate-parks\ccd_p2.csv'
 # SOURCE_FILE = r'C:\data\skate-parks\ccd_sample_error.csv'
 DEST_FILE = r'C:\data\skate-parks\ccd_20170815.csv'
-KEY = 'AIzaSyCq-NNfZ6knfLR56b2XlTiILMMOyt2y534'
+# KEY = 'AIzaSyCq-NNfZ6knfLR56b2XlTiILMMOyt2y534'
+KEY = 'AIzaSyCfhYUIfbvFFEp_BoerQmDbhFjbNfJXq2w'
 
 def main():
     start_time = datetime.now()

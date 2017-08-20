@@ -101,7 +101,7 @@ def retrieve_reports(youtube_reporting, job_id):
 # Call the YouTube Reporting API's media.download method to download the report.
 def download_report(youtube_reporting, report_url):
   request = youtube_reporting.media().download(
-    resourceName=""
+    resourceName=" "
   )
   request.uri = report_url
   fh = FileIO('report', mode='wb')

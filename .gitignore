@@ -10,3 +10,4 @@ Python/misc-env/*
 *.json
 *.csv
 credentials.dat
+Python/web-scraping/craigslist/log

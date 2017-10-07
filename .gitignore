@@ -2,5 +2,11 @@
 *.exe
 *.obj
 *.pyc
+
+# Virtual Environment
+Python/misc-env/*
+
+# Data
+*.json
 *.csv
 credentials.dat

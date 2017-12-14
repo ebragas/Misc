@@ -1,3 +1,5 @@
+.vscode/
+
 # C Compilation Output Files
 *.exe
 *.obj

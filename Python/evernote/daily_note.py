@@ -11,4 +11,5 @@ client = EvernoteClient(token=oauth_token)
 note_store = client.get_note_store()
 
 # Create note
+
 # Upload note

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vertexCommand command="Start" jobType="None" managedMemorySize="0" vertexArg="ScopeEngine.dll -scopeVertex SV1_Extract -vertexNumber 0">
+  <inputs>
+    <input name="" path="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv" blockAligned="True" globalStartOffset="0" localStartOffset="0" localEndOffset="3158" length="3158" />
+  </inputs>
+  <outputs>
+    <output path="C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0" isFirstOutputPiece="True" />
+  </outputs>
+</vertexCommand>

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<CommonCompileResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <InputStreams>
+    <string>C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv</string>
+  </InputStreams>
+  <OutputStreams>
+    <OutputStreamInfo>
+      <Path>C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv</Path>
+      <SchemaString>UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string</SchemaString>
+      <IsBinary>false</IsBinary>
+      <IsSStream>false</IsSStream>
+    </OutputStreamInfo>
+  </OutputStreams>
+  <ScriptPath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\Script.usql</ScriptPath>
+  <ScopeVertexDefinitionPath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\ScopeVertexDef.xml</ScopeVertexDefinitionPath>
+  <ScopeVertexDefinition>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1"&gt;
+  &lt;ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="Extract_0" uid="1" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor"&gt;
+      &lt;input id="Extract_0" uid="1" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" inputIndex="0" numberOfInputs="ALL" /&gt;
+      &lt;output id="Extract_0_Data0" uid="2" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Output_1" uid="3" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter"&gt;
+      &lt;input id="Extract_0_Data0" uid="2" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" /&gt;
+      &lt;output id="SV1_Extract_out0" uid="3" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" outputIndex="0" numberOfOutputs="1" finalOutput="true" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+&lt;/ScopeVertices&gt;</ScopeVertexDefinition>
+  <AlgebraPath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\__script__.abr</AlgebraPath>
+  <Algebra>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScriptAndGraph GraphType="VertexCommands"&gt;
+  &lt;Vertices count="1"&gt;
+    &lt;Vertex index="1" command="-scopeVertex SV1_Extract  -i C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv  -o C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER)" /&gt;
+    &lt;Vertex command="-concatenate -i C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -o C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" /&gt;
+  &lt;/Vertices&gt;
+  &lt;Outputs&gt;
+    &lt;Output path="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" isBinary="False" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" /&gt;
+  &lt;/Outputs&gt;
+  &lt;graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough"&gt;
+    &lt;process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="268435456" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True"&gt;
+      &lt;input id="Extract_0[ALL]" streamSize="3158"&gt;
+        &lt;cosmosStream cosmosPath="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv" streamSize="3158" /&gt;
+      &lt;/input&gt;
+      &lt;output id="SV1_Extract_out0" cosmosStream="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" /&gt;
+    &lt;/process&gt;
+  &lt;/graph&gt;
+  &lt;Scopescript&gt;// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM "/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@output = 
+    SELECT *
+    FROM @searchlog;
+
+OUTPUT @output 
+    TO "/SearchLog_output.tsv"
+    USING Outputters.Tsv();
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+&lt;/Scopescript&gt;
+  &lt;Optimization succeeded="true" time="00:00:00.2717189" latency="-1" totalCost="-1" /&gt;
+  &lt;ScopeVertexAnnotations&gt;
+    &lt;ScopeVertex name="SV1_Extract"&gt;
+      &lt;Operation annotation="EXTRACT USING IExtractor" /&gt;
+      &lt;Operation annotation="OUTPUT USING IOutputter" /&gt;
+    &lt;/ScopeVertex&gt;
+  &lt;/ScopeVertexAnnotations&gt;
+&lt;/ScriptAndGraph&gt;</Algebra>
+  <ErrorList />
+  <WarningList />
+  <HelperCodePath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\__ScopeCodeGenEngine__.dll.cpp</HelperCodePath>
+  <ResourceList />
+  <ReferenceList />
+  <ClusterResourceList />
+  <LocalRunSteps>
+    <string>-scopeVertex SV1_Extract  -i C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv  -o C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER) -managedMemorySize 0</string>
+    <string>-concatenate -i C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -o C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv -s "UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string"</string>
+  </LocalRunSteps>
+  <LocalRunCachePath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script</LocalRunCachePath>
+  <LocalRunTempPath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP</LocalRunTempPath>
+  <LocalRunRuntimePath>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script</LocalRunRuntimePath>
+  <ScopeWorkingDir>C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script</ScopeWorkingDir>
+</CommonCompileResult>

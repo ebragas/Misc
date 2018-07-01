@@ -1,0 +1,2 @@
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Algebra.xml
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\obj\Debug\Algebra.xml

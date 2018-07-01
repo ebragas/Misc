@@ -1,0 +1,7 @@
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\bin\Debug\DataUtilities.dll
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\bin\Debug\DataUtilities.pdb
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\bin\Debug\Microsoft.Analytics.Interfaces.dll
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\bin\Debug\Microsoft.Analytics.Types.dll
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\obj\Debug\DataUtilities.csprojResolveAssemblyReference.cache
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\obj\Debug\DataUtilities.dll
+C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\EDX_ADL\DataUtilities\obj\Debug\DataUtilities.pdb

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptAndGraph GraphType="VertexCommands">
+  <Vertices count="1">
+    <Vertex index="1" command="-scopeVertex SV1_Extract  -i C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv  -o C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER)" />
+    <Vertex command="-concatenate -i C:\Users\ericb\Source\GitHub\Misc\azure\data-lake\usql.io\usql.io\bin\Debug\Script\_TMP\scopetmpfile._SV1_Extract_out0 -o C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" />
+  </Vertices>
+  <Outputs>
+    <Output path="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" isBinary="False" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" />
+  </Outputs>
+  <graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough">
+    <process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="125829121" nativeExecutionMemorySize="268435456" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="Extract_0[ALL]" streamSize="3158">
+        <cosmosStream cosmosPath="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog.tsv" streamSize="3158" />
+      </input>
+      <output id="SV1_Extract_out0" cosmosStream="C:\Users\ericb\AppData\Local\USQLDataRoot\SearchLog_output.tsv" />
+    </process>
+  </graph>
+  <Scopescript>// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+@searchlog = 
+    EXTRACT UserId          int, 
+            Start           DateTime, 
+            Region          string, 
+            Query           string, 
+            Duration        int, 
+            Urls            string, 
+            ClickedUrls     string
+    FROM "/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@output = 
+    SELECT *
+    FROM @searchlog;
+
+OUTPUT @output 
+    TO "/SearchLog_output.tsv"
+    USING Outputters.Tsv();
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+</Scopescript>
+  <Optimization succeeded="true" time="00:00:00.2717189" latency="-1" totalCost="-1" />
+  <ScopeVertexAnnotations>
+    <ScopeVertex name="SV1_Extract">
+      <Operation annotation="EXTRACT USING IExtractor" />
+      <Operation annotation="OUTPUT USING IOutputter" />
+    </ScopeVertex>
+  </ScopeVertexAnnotations>
+</ScriptAndGraph>

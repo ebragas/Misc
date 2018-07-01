@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1">
+  <ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true">
+    <operator id="Extract_0" uid="1" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor">
+      <input id="Extract_0" uid="1" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" inputIndex="0" numberOfInputs="ALL" />
+      <output id="Extract_0_Data0" uid="2" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" />
+    </operator>
+    <operator id="Output_1" uid="3" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter">
+      <input id="Extract_0_Data0" uid="2" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" />
+      <output id="SV1_Extract_out0" uid="3" schema="UserId:int,Start:DateTime,Region:string,Query:string,Duration:int,Urls:string,ClickedUrls:string" outputIndex="0" numberOfOutputs="1" finalOutput="true" />
+    </operator>
+  </ScopeVertex>
+</ScopeVertices>

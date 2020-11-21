@@ -1,12 +1,12 @@
+# development env
+env/
 .vscode/
+*.swp
 
 # C Compilation Output Files
 *.exe
 *.obj
 *.pyc
-
-# Virtual Environment
-Python/misc-env/*
 
 # Data
 *.json
